@@ -42,7 +42,7 @@ class QueueDispatcher {
   void Flush();
 
  protected:
-  std::map<std::string, std::vector<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > >> queue_event_callbacks;
+  std::map<std::string, std::vector<Nan::Persistent<v8::Function, Nan::CopyablePersistentTraits<v8::Function> > >> queue_event_callbacks;
   std::vector<std::string> events;
 
   uv_mutex_t async_lock;

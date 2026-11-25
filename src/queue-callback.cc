@@ -23,7 +23,7 @@ QueueDispatcher::QueueDispatcher() {
 QueueDispatcher::~QueueDispatcher() {
   if (queue_event_callbacks.size() < 1) return;
 
-  std::map<std::string, std::vector<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > >>::iterator it;
+  std::map<std::string, std::vector<Nan::Persistent<v8::Function, Nan::CopyablePersistentTraits<v8::Function> > >>::iterator it;
   for (it = queue_event_callbacks.begin(); it != queue_event_callbacks.end(); it++) {
     for (size_t i=0; i < it->second.size(); i++) {
       it->second[i].Reset();
@@ -65,7 +65,7 @@ void QueueDispatcher::Deactivate() {
  * @locality main thread
  */
 bool QueueDispatcher::HasCallbacks(std::string key) {
-  std::map<std::string, std::vector<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > >>::iterator it =
+  std::map<std::string, std::vector<Nan::Persistent<v8::Function, Nan::CopyablePersistentTraits<v8::Function> > >>::iterator it =
           queue_event_callbacks.find(key);
   if (it != queue_event_callbacks.end()) {
     return it->second.size() > 0;
@@ -87,7 +87,7 @@ void QueueDispatcher::Execute() {
  * @locality main thread
  */
 void QueueDispatcher::Dispatch(std::string key) {
-  std::map<std::string, std::vector<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > >>::iterator it =
+  std::map<std::string, std::vector<Nan::Persistent<v8::Function, Nan::CopyablePersistentTraits<v8::Function> > >>::iterator it =
           queue_event_callbacks.find(key);
 
   if (it != queue_event_callbacks.end()) {
@@ -112,7 +112,7 @@ void QueueDispatcher::AddCallback(std::string key, const v8::Local<v8::Function>
  * @locality main thread
  */
 void QueueDispatcher::RemoveCallback(std::string key, const v8::Local<v8::Function> &cb) {
-  std::map<std::string, std::vector<v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > >>::iterator it =
+  std::map<std::string, std::vector<Nan::Persistent<v8::Function, Nan::CopyablePersistentTraits<v8::Function> > >>::iterator it =
           queue_event_callbacks.find(key);
 
   if (it != queue_event_callbacks.end()) {
